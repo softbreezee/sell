@@ -76,6 +76,8 @@ public class OrderServiceImplTest {
 
     @Test
     public void findAll() {
+        PageRequest pageRequest = new PageRequest(1,3);
+        Page<OrderDTO> orderDTOPage = orderService.findAll(pageRequest);
     }
 
     @Test

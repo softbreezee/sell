@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -76,5 +77,33 @@ public class ProductServiceImpl implements ProductService {
             productInfo.setProductStock(result);
             productInfoRepository.save(productInfo);
         }
+    }
+
+    @Override
+    public ProductInfo offSale(String  productId) {
+        ProductInfo productInfo = productInfoRepository.findById(productId).get();
+        if(productInfo==null){
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if(!productInfo.getProductStatus().equals(ProductStatusEnum.UP.getCode())){
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+        //更新
+        productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
+        return productInfoRepository.save(productInfo);
+    }
+
+    @Override
+    public ProductInfo onSale(String  productId) {
+        ProductInfo productInfo = productInfoRepository.findById(productId).get();
+        if(productInfo==null){
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if(!productInfo.getProductStatus().equals(ProductStatusEnum.DOWN.getCode())){
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+        //更新
+        productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
+        return productInfoRepository.save(productInfo);
     }
 }

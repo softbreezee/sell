@@ -6,6 +6,8 @@ spring:
     url: jdbc:mysql://202.199.5.62:3306/linuxdb1?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null
 server:
   servlet:
     context-path: /sell
@@ -16,3 +18,10 @@ server:
 #  file: /var/log/tomcat/sell.log
 #  level:
 #    com.softbreezee.demo.LogTest: debug
+wechat:
+  mpAppId: wxc5ceffc15627d911
+  mpAppSecret: abc3333e3c6e54dd2aa6042b00342ce0
+  mchId:
+  mchKey:
+  keyPath:
+  notifyUrl:

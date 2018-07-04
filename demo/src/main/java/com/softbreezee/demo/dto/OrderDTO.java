@@ -1,11 +1,16 @@
 package com.softbreezee.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softbreezee.demo.dataobj.OrderDetail;
 import com.softbreezee.demo.enums.OrderStatusEnum;
 import com.softbreezee.demo.enums.PayStatusEnum;
+import com.softbreezee.demo.utils.EnumUtil;
+import com.softbreezee.demo.utils.serializer.Date2LongSerilalizer;
 import lombok.Data;
+import org.aspectj.weaver.ast.Or;
 
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +22,7 @@ import java.util.List;
  * @date:2018/6/30
  */
 @Data
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
     /**订单id */
@@ -44,11 +50,22 @@ public class OrderDTO {
     private Integer payStatus;
 
     /** 创建时间.*/
+    @JsonSerialize(using = Date2LongSerilalizer.class)
     private Date createTime;
 
     /**更新时间.*/
+    @JsonSerialize(using = Date2LongSerilalizer.class)
     private Date updateTime;
 
     /** 订单详情 */
     private List<OrderDetail>orderDetailList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum(){
+        return EnumUtil.getByCode(orderStatus,OrderStatusEnum.class);
+    }
+    @JsonIgnore
+    public PayStatusEnum getpayStatusEnum(){
+        return EnumUtil.getByCode(payStatus,PayStatusEnum.class);
+    }
 }

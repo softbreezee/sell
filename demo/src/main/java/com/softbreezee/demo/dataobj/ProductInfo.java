@@ -1,6 +1,8 @@
 package com.softbreezee.demo.dataobj;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softbreezee.demo.enums.ProductStatusEnum;
+import com.softbreezee.demo.utils.EnumUtil;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 

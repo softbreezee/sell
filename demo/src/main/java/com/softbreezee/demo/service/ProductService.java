@@ -15,7 +15,14 @@ import java.util.List;
  */
 public interface ProductService {
     ProductInfo save(ProductInfo productInfo);
+
+    /**
+     * 查询商品列表
+     * @param pageable
+     * @return
+     */
     Page<ProductInfo> findAll(Pageable pageable);
+
     ProductInfo findOne(String productId);
     /**
      * 查询在架商品
@@ -27,6 +34,9 @@ public interface ProductService {
     void increaseStock(List<CartDTO> cartDTOS);
     //减库存
     void decreaseStock(List<CartDTO> cartDTOS);
+
+    ProductInfo offSale(String productId);
+    ProductInfo onSale(String productId);
 
 
 }

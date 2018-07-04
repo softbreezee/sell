@@ -26,10 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.awt.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -135,7 +132,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDTO> findAll(Pageable pageable) {
-        return null;
+        Page<OrderMaster> page = orderMasterRepository.findAll(pageable);
+
+        List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(page.getContent());
+
+        /**
+         * 参数一：content，list型
+         * 参数二：pageable。里面是第几页开始，几条数据的信息
+         * 参数三：总记录数
+         */
+        return new PageImpl<OrderDTO>(orderDTOList,pageable,page.getTotalElements());
     }
 
     @Override
